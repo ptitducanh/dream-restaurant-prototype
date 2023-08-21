@@ -32,6 +32,11 @@ public class ControlableCharacterComponent : BehavioralComponent
         var movingDirection = new Vector3(joyStickDirection.x, 0, joyStickDirection.y);
         
         _characterController.Move(movingDirection * Time.deltaTime * _movementStatComponent.GetFloatStat("MaxSpeed"));
+
+        if (movingDirection.magnitude > float.Epsilon)
+        { 
+            _characterController.transform.LookAt(_characterController.transform.position + movingDirection);
+        }
     }
 
     #endregion
@@ -43,10 +48,7 @@ public class ControlableCharacterComponent : BehavioralComponent
 
     #region event handlers
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        Debug.Log($"{hit.gameObject.name} hit {hit.point}");
-    }
+    
 
     #endregion
 }
