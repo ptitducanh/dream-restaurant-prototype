@@ -47,9 +47,15 @@ namespace Scripts.Components.BehavioralComponents
         
         private IEnumerator IEAddFoodToContainer(FoodContainerComponent foodContainer)
         {
+            float remainingTime = _foodData.PreparationTime;
             while (true)
             {
-                yield return new WaitForSeconds(1f);
+                remainingTime = _foodData.PreparationTime;
+                while (remainingTime > 0)
+                {
+                    remainingTime -= Time.deltaTime;
+                    yield return null;
+                }
                 foodContainer.Foods.Add(_foodData.FoodType);
             }
         }

@@ -7,6 +7,12 @@ namespace Scripts.Data
     public class FoodRequestConfiguration : ScriptableObject
     {  
         public FoodRequest[] Requests;
+        
+        public FoodType GetRandomFoodType()
+        {
+            var randomIndex = UnityEngine.Random.Range(0, Requests.Length);
+            return Requests[randomIndex].FoodType;
+        }
     }
 
     [Serializable]

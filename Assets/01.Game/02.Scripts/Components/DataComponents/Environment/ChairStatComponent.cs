@@ -7,8 +7,8 @@ namespace Scripts.Entities
 {
     public class ChairStatComponent : DataComponent
     {
-        public bool      IsOccupied;
-        public Transform Table;
+        public bool       IsOccupied;
+        public BaseEntity Occupant;
+        public Transform  Table;
     }
-
 }

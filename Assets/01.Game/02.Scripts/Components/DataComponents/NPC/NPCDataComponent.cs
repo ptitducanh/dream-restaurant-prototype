@@ -20,8 +20,16 @@ namespace Scripts.Components
     {
         [ReadOnly] public NPCState State;
         [ReadOnly] public float    RemainingEatingTime;
+        [ReadOnly] public FoodType RequestedFoodType;
 
         public float EatingDuration;
         public FoodRequestConfiguration FoodRequestConfiguration;
+
+        public override void OnAwake()
+        {
+            base.OnAwake();
+            
+            RequestedFoodType = FoodRequestConfiguration.GetRandomFoodType();
+        }
     }
 }

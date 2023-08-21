@@ -82,6 +82,7 @@ namespace Scripts.Components
 
                     // move to the exit
                     _chair.IsOccupied = false;
+                    _chair.Occupant   = null;
                     MoveToExit();
                 }
             }
@@ -99,6 +100,7 @@ namespace Scripts.Components
 
             _chair             = chair.GetDataComponent<ChairStatComponent>(); //Cache the chair
             _chair.IsOccupied  = true;                                         // Set the chair to occupied
+            _chair.Occupant    = Entity;                                       // Set the chair's occupant to this NPC
             _agent.destination = _chair.transform.position;                    // move the agent to the chair
         }
 
@@ -136,15 +138,13 @@ namespace Scripts.Components
 
         #endregion
 
-        #region Debug functions
+        #region public functions
 
-#if UNITY_EDITOR
         [Button("Start eating")]
         public void Eat()
         {
             _dataComponent.State = NPCState.Eating;
         }
-#endif
 
         #endregion
     }

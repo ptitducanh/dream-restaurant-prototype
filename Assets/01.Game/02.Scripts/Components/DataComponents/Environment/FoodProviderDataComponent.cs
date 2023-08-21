@@ -7,5 +7,6 @@ namespace Scripts.Entities
     public class FoodProviderDataComponent : DataComponent
     {
         public FoodType FoodType;
+        public float    PreparationTime;
     }
 }

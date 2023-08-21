@@ -16,6 +16,3 @@ MonoBehaviour:
   - FoodType: 0
     Amount: 1
     Factor: 100
-  - FoodType: 1
-    Amount: 1
-    Factor: 100
