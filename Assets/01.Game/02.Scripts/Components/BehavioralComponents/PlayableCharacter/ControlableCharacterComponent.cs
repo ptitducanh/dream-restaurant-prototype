@@ -7,8 +7,9 @@ using UnityEngine;
 public class ControlableCharacterComponent : BehavioralComponent
 {
     [SerializeField] private Joystick joystick;
-    
-    private CharacterController _characterController;
+
+    private Animator              _animator;
+    private CharacterController   _characterController;
     private MovementStatComponent _movementStatComponent;
     
     #region lifecycle methods
@@ -17,6 +18,7 @@ public class ControlableCharacterComponent : BehavioralComponent
         base.OnAwake();
 
         _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
         _movementStatComponent = Entity.GetDataComponent<MovementStatComponent>();
     }
 
@@ -24,6 +26,8 @@ public class ControlableCharacterComponent : BehavioralComponent
     {
         base.OnUpdate();
 
+        _animator.SetFloat("speed", _characterController.velocity.magnitude);    
+            
         var joyStickDirection = joystick.Direction;
         var movingDirection = new Vector3(joyStickDirection.x, 0, joyStickDirection.y);
         
