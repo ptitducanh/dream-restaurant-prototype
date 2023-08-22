@@ -25,6 +25,7 @@ namespace Scripts.Data
 
     public enum FoodType
     {
+        None,
         Burger,
         Pizza
     }

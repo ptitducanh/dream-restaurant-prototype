@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Scripts.Data;
 using Scripts.Entities;
 using UnityEngine;
 
@@ -36,15 +37,11 @@ namespace Scripts.Components.BehavioralComponents
                 var npcState              = npcEntity.GetDataComponent<NPCDataComponent>().State;
 
                 if (npcState != NPCState.WaitingForFood) return;
-                
-                foreach (var food in _foodContainer.Foods)
+
+                var foodForNPC = _foodContainer.GetFood(requestFoodType);
+                if (foodForNPC != FoodType.None)
                 {
-                    if (food == requestFoodType)
-                    {
-                        aiControlledComponent.Eat();
-                        _foodContainer.Foods.Remove(food);
-                        break;
-                    }
+                    aiControlledComponent.Eat();
                 }
             }
         }

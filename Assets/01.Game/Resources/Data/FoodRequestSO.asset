@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: FoodRequestSO
   m_EditorClassIdentifier: 
   Requests:
-  - FoodType: 0
+  - FoodType: 1
+    Amount: 1
+    Factor: 100
+  - FoodType: 2
     Amount: 1
     Factor: 100

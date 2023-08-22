@@ -56,7 +56,7 @@ namespace Scripts.Components.BehavioralComponents
                     remainingTime -= Time.deltaTime;
                     yield return null;
                 }
-                foodContainer.Foods.Add(_foodData.FoodType);
+                foodContainer.AddFood(_foodData.FoodType);
             }
         }
     }

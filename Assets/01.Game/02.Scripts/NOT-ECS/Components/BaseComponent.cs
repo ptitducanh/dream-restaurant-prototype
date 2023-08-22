@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Scripts.Components
 {
-    public abstract class BaseComponent : MonoBehaviour
+    public abstract class BaseComponent : SerializedMonoBehaviour
     {
         [HideInInspector] public BaseEntity Entity;
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Scripts.Data;
 using Sirenix.OdinInspector;
@@ -7,6 +8,31 @@ namespace Scripts.Components
 {
     public class FoodContainerComponent : DataComponent
     {
-        [ReadOnly]public List<FoodType> Foods = new();
+        [SerializeField] [ReadOnly] 
+        public List<FoodType> Foods { get; private set; } = new();
+
+        public Action<FoodType> OnFoodAdded;
+        public Action<FoodType> OnFoodRemoved;
+            
+        public void AddFood(FoodType food)
+        {
+            Foods.Add(food);
+            OnFoodAdded?.Invoke(food);
+        }
+
+        public FoodType GetFood(FoodType food)
+        {
+            foreach (var foodItem in Foods)
+            {
+                if (foodItem == food)
+                {
+                    Foods.Remove(foodItem);
+                    OnFoodRemoved?.Invoke(foodItem);
+                    return foodItem;
+                }
+            }
+
+            return FoodType.None;
+        }
     }
 }
