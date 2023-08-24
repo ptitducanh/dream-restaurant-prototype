@@ -12,11 +12,12 @@ namespace Scripts.Components.BehavioralComponents
         private InventoryDataComponent _inventoryDataComponent;
         private int _currentCoinAmount;
         
-        public override void OnAwake()
+        public override void OnStart()
         {
-            base.OnAwake();
-
-            var characterEntity = EntityManager.Instance.GetEntitiesByType<PlayerCharacterEntity>().FirstOrDefault();
+            base.OnStart();
+            
+            var characterEntites = EntityManager.Instance.GetEntitiesByType<PlayerCharacterEntity>();
+            var characterEntity  = characterEntites.FirstOrDefault();
             if (characterEntity == null) return;
             
             _inventoryDataComponent = characterEntity.GetDataComponent<InventoryDataComponent>();
