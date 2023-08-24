@@ -77,6 +77,7 @@ namespace Scripts.Components.BehavioralComponents
                 }
                 foodContainer.AddFood(_foodData.FoodType);
                 MMVibrationManager.Haptic(HapticTypes.Success);
+                SoundController.Instance.PlaySFX("FoodCollect");
             }
         }
     }

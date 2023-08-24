@@ -77,8 +77,8 @@ namespace Scripts.Components
                     _dataComponent.State = NPCState.FinishedEating;
 
                     // TODO: leave some money on the table.
-                    Debug.Log($"{gameObject.name} left some money on table");
-
+                    _dataComponent.IsDoneEating  = true;
+                    _dataComponent.DidPayForFood = false;
 
                     // move to the exit
                     _chair.IsOccupied = false;

@@ -96,6 +96,11 @@ namespace Scripts.Entities
             }
         }
 
+        private void OnDestroy()
+        {
+            EntityManager.Instance.UnregisterEntity(this);
+        }
+
         #endregion
 
         #region public methods

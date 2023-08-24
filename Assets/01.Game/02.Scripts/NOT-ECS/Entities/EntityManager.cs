@@ -26,6 +26,18 @@ namespace Scripts.Entities
 
             _entitiesByType[entity.GetType()].Add(entity);
         }
+        
+        public void UnregisterEntity(BaseEntity entity)
+        {
+            //Remove entity from _entitiesByType
+            if (_entitiesByType.ContainsKey(entity.GetType()))
+            {
+                _entitiesByType[entity.GetType()].Remove(entity);
+            }
+
+            //remove from _entities
+            _entities.Remove(entity.Id);
+        }
 
         public BaseEntity GetEntityById(int id)
         {

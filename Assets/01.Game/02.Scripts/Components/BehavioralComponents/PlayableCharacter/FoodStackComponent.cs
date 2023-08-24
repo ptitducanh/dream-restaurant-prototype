@@ -2,17 +2,18 @@
 using System.Linq;
 using Scripts.Data;
 using Scripts.Entities;
+using Scripts.Others;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Scripts.Components.BehavioralComponents
 {
     public class FoodStackComponent : BehavioralComponent
     {
-        [SerializeField] private Transform container;
+        public  Transform Container;
         [SerializeField] private float     itemHeight;
 
         private FoodContainerComponent _foodContainer;
-        private FoodItemPoolEntity     _foodItemPoolEntity;
         private List<GameObject>       _foodObjects = new();
         private List<FoodType>         _foodTypes   = new();
 
@@ -21,7 +22,6 @@ namespace Scripts.Components.BehavioralComponents
             base.OnAwake();
 
             _foodContainer      = Entity.GetDataComponent<FoodContainerComponent>();
-            _foodItemPoolEntity = EntityManager.Instance.GetEntitiesByType<FoodItemPoolEntity>().FirstOrDefault();
 
             _foodContainer.OnFoodAdded   += OnAddFood;
             _foodContainer.OnFoodRemoved += OnRemoveFood;
@@ -29,7 +29,10 @@ namespace Scripts.Components.BehavioralComponents
 
         private void OnAddFood(FoodType food)
         {
-            var foodObject = Instantiate(_foodItemPoolEntity.FoodItems[food], container);
+            var foodObject = ObjectPool.Instance.Get(food.ToString());
+            foodObject.SetActive(true);
+            foodObject.transform.SetParent(Container);
+            
             foodObject.transform.localPosition = new Vector3(0, _foodContainer.Foods.Count * itemHeight, 0);
             _foodObjects.Add(foodObject);
             _foodTypes.Add(food);
@@ -38,7 +41,7 @@ namespace Scripts.Components.BehavioralComponents
         private void OnRemoveFood(FoodType food)
         {
             int removeIndex = -1;
-            for (int i = _foodTypes.Count - 1; i >= 0; i--)
+            for (int i = 0; i < _foodObjects.Count; i++)
             {
                 if (removeIndex != -1)
                 {
@@ -54,7 +57,7 @@ namespace Scripts.Components.BehavioralComponents
             }
             
             
-            Destroy(_foodObjects[removeIndex]);
+            ObjectPool.Instance.Return(_foodObjects[removeIndex]);
             _foodObjects.RemoveAt(removeIndex);
             _foodTypes.RemoveAt(removeIndex);
         }

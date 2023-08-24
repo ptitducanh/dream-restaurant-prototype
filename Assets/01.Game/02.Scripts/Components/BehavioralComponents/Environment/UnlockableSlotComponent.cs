@@ -86,23 +86,37 @@ namespace Scripts.Components.BehavioralComponents
             var wait1Sec = new WaitForSeconds(1);
             while (!_unlockableSlotDataComponent.IsUnlocked)
             {
+                // Wait for 1 second
                 yield return wait1Sec;
+                
+                // check if player has enough coin
                 var playerCoin = _inventoryDataComponent.GetIntStat("Coin");
                 if (playerCoin <= 0) yield break;
-                _inventoryDataComponent.UpdateIntStat("Coin", -1);
-                _unlockableSlotDataComponent.RemainingCoin--;
 
+                // calculate how much coin to take in this second
+                // then take it from player
+                var coinToTake = Mathf.Min(playerCoin, _unlockableSlotDataComponent.CoinPerSecond);
+                _inventoryDataComponent.UpdateIntStat("Coin", -coinToTake);
+                _unlockableSlotDataComponent.RemainingCoin -= coinToTake;
+                SoundController.Instance.PlaySFX("UseCoinToUnlock");
+                
                 remainingCoinTxt.text = _unlockableSlotDataComponent.RemainingCoin.ToString();
                 progressImage.rectTransform.localScale = new Vector3(1, 1f - (float) _unlockableSlotDataComponent.RemainingCoin / _unlockableSlotDataComponent.RequiredCoin, 1);
                 
                 if (_unlockableSlotDataComponent.RemainingCoin <= 0)
                 {
-                    _unlockableSlotDataComponent.IsUnlocked = true;
-                    objectToUnlock.SetActive(true);
-                    Destroy(Entity.gameObject);
+                    UnlockSlot();
                     break;
                 }
             }
+        }
+        
+        private void UnlockSlot()
+        {
+            SoundController.Instance.PlaySFX("NewSlot");
+            _unlockableSlotDataComponent.IsUnlocked = true;
+            objectToUnlock.SetActive(true);
+            Destroy(Entity.gameObject);
         }
     }
 }

@@ -11,12 +11,15 @@ public class GameDirector : Singleton<GameDirector>
     [SerializeField] private float     npcSpawnInterval;
     [SerializeField] private Transform SpawnPoint;
 
+    [SerializeField] private List<GameObject[]> unlockableWaves;
+
     private float _remainingSpawnTime;
+    private int   _currentWaveIndex = 0;
 
     protected override void Awake()
     {
         base.Awake();
-        
+
         _remainingSpawnTime = npcSpawnInterval;
     }
 
@@ -31,7 +34,22 @@ public class GameDirector : Singleton<GameDirector>
                 _remainingSpawnTime = npcSpawnInterval;
                 SpawnNPC();
             }
+
             _remainingSpawnTime = npcSpawnInterval;
+        }
+
+        if (_currentWaveIndex < unlockableWaves.Count)
+        {
+            var currentWave = unlockableWaves[_currentWaveIndex];
+            if (currentWave.All(slot => EntityManager.Instance.GetEntityById(slot.GetInstanceID()) == null))
+            {
+                _currentWaveIndex++;
+                var nextWave = unlockableWaves[_currentWaveIndex];
+                foreach (var slot in nextWave)
+                {
+                    slot.gameObject.SetActive(true);
+                }
+            }
         }
     }
 

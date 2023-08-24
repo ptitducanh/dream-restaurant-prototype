@@ -29,13 +29,14 @@ namespace Scripts.Components.BehavioralComponents
         {
             base.OnUpdate();
 
-            _animator.SetFloat("speed", _characterController.velocity.magnitude);
 
             var joyStickDirection = joystick.Direction;
             var movingDirection   = new Vector3(joyStickDirection.x, 0, joyStickDirection.y);
 
             _characterController.Move(movingDirection * Time.deltaTime * _movementStatComponent.GetFloatStat("MaxSpeed"));
-
+            _animator.SetFloat("speed", _characterController.velocity.magnitude);
+            _characterController.Move(Vector3.down * 9.8f);
+            
             if (movingDirection.magnitude > float.Epsilon)
             {
                 _characterController.transform.LookAt(_characterController.transform.position + movingDirection);

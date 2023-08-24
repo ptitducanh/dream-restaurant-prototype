@@ -53,6 +53,7 @@ namespace Scripts.Others
 
             _pool[go.name].Add(go);
             go.SetActive(false);
+            go.transform.SetParent(null);
         }
 
         private void InitializePool()
@@ -63,6 +64,7 @@ namespace Scripts.Others
                 for (int i = 0; i < 10; i++)
                 {
                     var itemObject = Instantiate(prefab);
+                    itemObject.name = prefab.name;
                     Return(itemObject);
                 }
             }

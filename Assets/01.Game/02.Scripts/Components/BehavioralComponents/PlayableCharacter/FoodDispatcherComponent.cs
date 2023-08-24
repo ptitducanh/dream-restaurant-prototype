@@ -19,6 +19,7 @@ namespace Scripts.Components.BehavioralComponents
 
         private void OnTriggerEnter(Collider other)
         {
+            // check if we collided with a chair
             var chairEntity = EntityManager.Instance.GetEntityById(other.gameObject.GetInstanceID());
             if (chairEntity == null) return;
 
@@ -27,6 +28,7 @@ namespace Scripts.Components.BehavioralComponents
 
             if (!chairComponent.IsOccupied) return;
 
+            // Get the NPC sitting on the chair
             var occupant = chairComponent.Occupant;
             if (occupant == null) return;
 
