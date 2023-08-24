@@ -33,7 +33,7 @@ namespace Scripts.Components.BehavioralComponents
             var joyStickDirection = joystick.Direction;
             var movingDirection   = new Vector3(joyStickDirection.x, 0, joyStickDirection.y);
 
-            _characterController.Move(movingDirection * Time.deltaTime * _movementStatComponent.GetFloatStat("MaxSpeed"));
+            _characterController.Move(movingDirection.normalized * Time.deltaTime * _movementStatComponent.GetFloatStat("MaxSpeed"));
             _animator.SetFloat("speed", _characterController.velocity.magnitude);
             _characterController.Move(Vector3.down * 9.8f);
             

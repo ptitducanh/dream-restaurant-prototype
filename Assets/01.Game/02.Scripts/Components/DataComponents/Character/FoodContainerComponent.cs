@@ -11,13 +11,13 @@ namespace Scripts.Components
         [SerializeField] [ReadOnly] 
         public List<FoodType> Foods { get; private set; } = new();
 
-        public Action<FoodType> OnFoodAdded;
+        public Action<FoodType, Vector3> OnFoodAdded;
         public Action<FoodType> OnFoodRemoved;
             
-        public void AddFood(FoodType food)
+        public void AddFood(FoodType food, Vector3 sourcePosition)
         {
             Foods.Add(food);
-            OnFoodAdded?.Invoke(food);
+            OnFoodAdded?.Invoke(food, sourcePosition);
         }
 
         public FoodType GetFood(FoodType food)

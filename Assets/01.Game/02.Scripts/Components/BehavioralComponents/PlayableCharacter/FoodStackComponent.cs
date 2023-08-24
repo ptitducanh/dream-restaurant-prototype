@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Scripts.Data;
 using Scripts.Entities;
 using Scripts.Others;
@@ -27,13 +28,22 @@ namespace Scripts.Components.BehavioralComponents
             _foodContainer.OnFoodRemoved += OnRemoveFood;
         }
 
-        private void OnAddFood(FoodType food)
+        private void OnAddFood(FoodType food, Vector3 sourcePosition)
         {
             var foodObject = ObjectPool.Instance.Get(food.ToString());
             foodObject.SetActive(true);
             foodObject.transform.SetParent(Container);
+
+            if (sourcePosition.x > float.MinValue)
+            {
+                foodObject.transform.position = sourcePosition;
+                foodObject.transform.DOLocalJump(new Vector3(0, _foodContainer.Foods.Count * itemHeight, 0), 1, 1, 0.5f);
+            }
+            else
+            {
+                foodObject.transform.localPosition = new Vector3(0, _foodContainer.Foods.Count * itemHeight, 0);
+            }
             
-            foodObject.transform.localPosition = new Vector3(0, _foodContainer.Foods.Count * itemHeight, 0);
             _foodObjects.Add(foodObject);
             _foodTypes.Add(food);
         }

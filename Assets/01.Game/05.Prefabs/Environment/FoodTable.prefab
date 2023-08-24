@@ -123,6 +123,7 @@ Transform:
   - {fileID: 1211321984260206505}
   - {fileID: 2130839360040108624}
   - {fileID: 6329844769429475514}
+  - {fileID: 7354335749489918563}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -301,6 +302,7 @@ MonoBehaviour:
     SerializationNodes: []
   Entity: {fileID: 0}
   fillImage: {fileID: 518761033107474835}
+  sourceFoodTransform: {fileID: 7354335749489918563}
 --- !u!114 &2130839359699912246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,7 +677,7 @@ GameObject:
   - component: {fileID: 6329844769429475514}
   - component: {fileID: 7537395348125825069}
   m_Layer: 0
-  m_Name: FoodPosition
+  m_Name: StandPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -900,3 +902,34 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8345761594054845126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7354335749489918563}
+  m_Layer: 0
+  m_Name: FoodPosiiton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7354335749489918563
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8345761594054845126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.00127, z: 0.00695}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1880528164093485526}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -15,7 +15,8 @@ namespace Scripts.Components.BehavioralComponents
     /// </summary>
     public class FoodProviderComponent : BehavioralComponent
     {
-        [SerializeField] private Image fillImage;
+        [SerializeField] private Image     fillImage;
+        [SerializeField] private Transform sourceFoodTransform;
         
         private FoodProviderDataComponent _foodData;
         private Coroutine _addFoodToContainerCoroutine;
@@ -75,7 +76,7 @@ namespace Scripts.Components.BehavioralComponents
                     fillImage.fillAmount = 1f - remainingTime / _foodData.PreparationTime;
                     yield return null;
                 }
-                foodContainer.AddFood(_foodData.FoodType);
+                foodContainer.AddFood(_foodData.FoodType, sourceFoodTransform.position);
                 MMVibrationManager.Haptic(HapticTypes.Success);
                 SoundController.Instance.PlaySFX("FoodCollect");
             }
