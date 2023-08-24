@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Scripts.Common;
 using Sirenix.OdinInspector;
@@ -5,13 +6,21 @@ using UnityEngine;
 
 namespace Scripts.Others
 {
+    /// <summary>
+    /// A simple object pool implementation.
+    /// </summary>
     public class ObjectPool : Singleton<ObjectPool>
     {
-        [SerializeField] Dictionary<string, GameObject> poolPrefab = new Dictionary<string, GameObject>();
-        
-        [SerializeField] [ReadOnly] private Dictionary<string, List<GameObject>> _pool = new Dictionary<string, List<GameObject>>();
-        
-        
+        [SerializeField]            private GameObject[]                         prefabs;
+        [SerializeField] [ReadOnly] private Dictionary<string, List<GameObject>> _pool = new();
+
+        private Dictionary<string, GameObject> _prefabMap = new();
+
+        private void Start()
+        {
+            InitializePool();
+        }
+
         public GameObject Get(string name)
         {
             if (!_pool.ContainsKey(name))
@@ -21,7 +30,7 @@ namespace Scripts.Others
 
             if (_pool[name].Count == 0)
             {
-                var prefab = poolPrefab[name];
+                var prefab = _prefabMap[name];
                 var go = Instantiate(prefab);
                 go.name = name;
                 go.SetActive(true);
@@ -48,12 +57,14 @@ namespace Scripts.Others
 
         private void InitializePool()
         {
-            foreach (var prefab in poolPrefab)
+            foreach (var prefab in prefabs)
             {
-                var itemObject = Instantiate(prefab.Value);
-                itemObject.name = prefab.Key;
-                
-                Return(itemObject);
+                _prefabMap.Add(prefab.name, prefab);
+                for (int i = 0; i < 10; i++)
+                {
+                    var itemObject = Instantiate(prefab);
+                    Return(itemObject);
+                }
             }
         }
     }
